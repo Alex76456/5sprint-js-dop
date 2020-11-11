@@ -1,0 +1,6 @@
+.hotels__element-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  margin-right: 19px;
+}

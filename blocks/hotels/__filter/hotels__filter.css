@@ -1,0 +1,9 @@
+.hotels__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 14px 0;
+  width: calc(100% - 36px);
+  margin: 0 auto;
+}
