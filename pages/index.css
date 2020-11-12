@@ -7,17 +7,17 @@
 @import url('../blocks/hotels/__filter-title/hotels__filter-title.css');
 @import url('../blocks/hotels/__filter-button/hotels__filter-button.css');
 @import url('../blocks/hotels/__container/hotels__container.css');
-@import url('../blocks/hotels/__element/hotels__element.css');
-@import url('../blocks/hotels/__element-image/hotels__element-image.css');
-@import url('../blocks/hotels/__element-description/hotels__element-description.css');
-@import url('../blocks/hotels/__element-title/hotels__element-title.css');
-@import url('../blocks/hotels/__element-price/hotels__element-price.css');
+@import url('../blocks/hotel/hotel.css');
+@import url('../blocks/hotel/__image/hotel__image.css');
+@import url('../blocks/hotel/__description/hotel__description.css');
+@import url('../blocks/hotel/__title/hotel__title.css');
+@import url('../blocks/hotel/__price/hotel__price.css');
 @import url('../blocks/hotels/__show/hotels__show.css');
 @import url('../blocks/hotels/__show-button/hotels__show-button.css');
-@import url('../blocks');
-@import url('../blocks');
-@import url('../blocks');
-@import url('../blocks');
+@import url('../blocks/popup/popup.css');
+@import url('../blocks/popup/_opened/popup_opened.css');
+@import url('../blocks/popup/__content/popup__content.css');
+@import url('../blocks/popup/__title/popup__title.css');
 
 /*
 @import url('../blocks');

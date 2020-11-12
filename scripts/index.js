@@ -39,3 +39,91 @@ const hotels = [{
     photo: 'https://cf.bstatic.com/xdata/images/hotel/square600/256888798.webp?k=03b5832921f7a206abdc69df10bcb91992fb14b614917e452bd082a2a1abf47e&o='
   },
 ];
+
+
+const hotelsArea = document.querySelector('.hotels');
+const hotelsContainer = hotelsArea.querySelector('.hotels__container');
+const hotelTemplate = hotelsArea.querySelector('#hotel-template').content;
+
+const showButton = hotelsArea.querySelector('.hotels__show-button');
+const incrementButton = hotelsArea.querySelector('.hotels__filter-button_type_increment');
+const decrementButton = hotelsArea.querySelector('.hotels__filter-button_type_decrement');
+
+function createHotel(titleValue, priceValue, linkValue) {
+  let hotelsElement = hotelTemplate.cloneNode(true);
+
+  const hotelsElementImage = hotelsElement.querySelector('.hotel__image');
+  const hotelsElementPrice = hotelsElement.querySelector('.hotel__price');
+  const hotelsElementTitle = hotelsElement.querySelector('.hotel__title');
+
+  hotelsElementImage.src = linkValue;
+  hotelsElementImage.alt = titleValue;
+  hotelsElementTitle.textContent = titleValue;
+  hotelsElementPrice.textContent = '€ ' + priceValue;
+  return hotelsElement
+}
+
+function addAppend(x) {
+  hotelsContainer.append(x);
+}
+
+function renderElements(x) {
+  for (let i = 0; i < x.length; i++) {
+    addAppend(createHotel(x[i].title, x[i].price, x[i].photo));
+  }
+}
+
+
+
+
+function removeAllHotels() {
+  const elementsForRemove = hotelsArea.querySelectorAll('.hotel');
+  for (let i = 0; i < elementsForRemove.length; i++) {
+    elementsForRemove[i].remove()
+  }
+}
+
+
+
+
+function showIncrementHotels() {
+  const hotelsIncrement = hotels.sort((a, b) => a.price - b.price);
+  removeAllHotels()
+  renderElements(hotelsIncrement.slice(0, 3))
+  hotelsContainer.classList.add('incremented')
+  hotelsContainer.classList.remove('decremented')
+}
+
+function showDecrementHotels() {
+  const hotelsDecrement = hotels.sort((a, b) => b.price - a.price);
+  removeAllHotels()
+  renderElements(hotelsDecrement.slice(0, 3))
+  hotelsContainer.classList.add('decremented')
+  hotelsContainer.classList.remove('incremented')
+}
+
+showIncrementHotels()
+
+
+function showAllHotels() {
+  if (hotelsContainer.classList.contains('incremented')) {
+    const hotelsIncrement = hotels.sort((a, b) => a.price - b.price);
+    removeAllHotels()
+    renderElements(hotelsIncrement)
+    hotelsContainer.classList.add('incremented')
+    hotelsContainer.classList.remove('decremented')
+  }
+  if (hotelsContainer.classList.contains('decremented')) {
+    const hotelsDecrement = hotels.sort((a, b) => b.price - a.price);
+    removeAllHotels()
+    renderElements(hotelsDecrement)
+    hotelsContainer.classList.add('decremented')
+    hotelsContainer.classList.remove('incremented')
+  }
+
+}
+
+
+showButton.addEventListener('click', showAllHotels);
+incrementButton.addEventListener('click', showIncrementHotels);
+decrementButton.addEventListener('click', showDecrementHotels);

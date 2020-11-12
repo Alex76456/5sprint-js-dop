@@ -1,4 +1,4 @@
-.hotels__element-description {
+.hotel__description {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

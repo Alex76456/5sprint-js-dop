@@ -1,4 +1,4 @@
-.hotels__element {
+.hotel {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -8,6 +8,6 @@
   margin-bottom: 20px;
 }
 
-.hotels__element:last-of-type {
+.hotel:last-of-type {
   margin-bottom: 0;
 }

@@ -22,13 +22,15 @@
         </div>
 
         <ul class="hotels__container">
-          <li class="hotels__element">
-            <img class="hotels__element-image" src="#" alt="название отеля">
-            <div class="hotels__element-description">
-              <h2 class="hotels__element-title">Название отеля</h2>
-              <p class="hotels__element-price">€ 100</p>
-            </div>
-          </li>
+          <template id="hotel-template">
+            <li class="hotel">
+              <img class="hotel__image" src="#" alt="название отеля">
+              <div class="hotel__description">
+                <h2 class="hotel__title">Название отеля</h2>
+                <p class="hotel__price">Цена</p>
+              </div>
+            </li>
+          </template>
         </ul>
 
         <div class="hotels__show">
@@ -39,6 +41,14 @@
 
     <footer class="footer">
     </footer>
+  </div>
+  <div class="popup popup_type_best-hotel popup_opened">
+    <div class="popup__content">
+      <h2 class="popup__title">Не упустите лучшее предложение!</h2>
+      <ul class="popup__best">
+
+      </ul>
+    </div>
   </div>
 
   <script src="./scripts/index.js"></script>
