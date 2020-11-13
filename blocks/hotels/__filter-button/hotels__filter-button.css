@@ -8,6 +8,7 @@
   padding: 0;
   margin-right: 19px;
   outline: none;
+  cursor: pointer;
 }
 
 .hotels__filter-button:hover {
