@@ -1,3 +1,5 @@
+//МАССИВ ВОДНЫХ ДАННЫХ: ------------------------------------------------------------
+
 const hotels = [{
     title: "Albus Hotel Amsterdam City Centre",
     price: 115,
@@ -40,6 +42,143 @@ const hotels = [{
   },
 ];
 
+//------------------------------------------------------------------------------
+
+
+
+// Объект с текущим состоянием приложения
+// sortOrder -- выбранная сортировка
+// visibleHotels -- количесто отображаемых отелей
+// hotels -- отфильтрованные отели (без отелей без цен)
+// isPopupOpen -- открыт ли сейчас попап
+const appState = {
+  sortOrder: undefined,
+  visibleHotels: 3,
+  hotels: [],
+  isPopupOpen: false,
+};
+
+const hotelTemplate = document.querySelector('#hotel-template').content.querySelector('.hotel');
+const hotelsWrapper = document.querySelector('.hotels__container');
+const showMoreHotelsButton = document.querySelector('.hotels__show-button');
+const sortByPriceAscButton = document.querySelector('.hotels__filter-button_type_increment');
+const sortByPriceDescButton = document.querySelector('.hotels__filter-button_type_decrement');
+
+
+const popup = document.querySelector('.popup');
+const popupContent = popup.querySelector('.popup__content');
+
+//const closePopupButton = popup.querySelector('.close-popup');
+
+// обработчки кнопки "показать больше"
+// меняет количество appState.visibleHotel на максимальное, скрывает кнопку и заново отрисовывает отели
+const handleShowMoreHotelClick = (e) => {
+  e.preventDefault();
+
+  appState.visibleHotels = appState.hotels.length;
+  //showMoreHotelsButton.classList.add('button-show-more_hidden');
+  renderHotels();
+};
+
+// создание элемента отеля
+const renderSingleHotelItem = (hotel) => {
+  const element = hotelTemplate.cloneNode(true);
+  const hotelPhoto = element.querySelector('.hotel__image');
+  const hotelTitle = element.querySelector('.hotel__title');
+  const hotelPrice = element.querySelector('.hotel__price');
+
+  hotelPhoto.src = hotel.photo;
+  hotelPhoto.alt = hotel.title;
+  hotelTitle.textContent = hotel.title;
+  hotelPrice.textContent = '€ ' + hotel.price;
+
+  return element
+};
+
+// рендер списка отелей -- очищаем hotelsWrapper и подготавлиаем hotelsToRender с нужным количеством отелей
+const renderHotels = () => {
+  hotelsWrapper.textContent = '';
+  const hotelsToRender = appState.hotels.slice(0, appState.visibleHotels);
+  hotelsToRender.forEach(item => hotelsWrapper.append(renderSingleHotelItem(item)));
+};
+
+// фильтрация отелей без цен -- их показывать нет смысла
+const validateHotels = () => {
+  appState.hotels = hotels.filter(item => item.price);
+};
+
+// сортировка по цене. Сортируем массив данных, а не сами элементы.
+const sortHotels = () => {
+  const sortBy = appState.sortOrder;
+  appState.hotels.sort((a, b) => {
+    if (sortBy === 'asc') {
+      return a.price - b.price
+    }
+    if (sortBy === 'desc') {
+      return b.price - a.price
+    }
+  });
+
+  renderHotels();
+};
+
+// обработчик клика сортировки (order -- агрумент с направлением сортировки)
+const handleSortButtonClick = (e, order) => {
+  e.preventDefault();
+  if (appState.sortOrder !== order) {
+    appState.sortOrder = order;
+    sortHotels();
+  }
+};
+
+// проверка на выход курсора за пределы document
+const onMouseOutDocument = (e) => {
+  const element = e.relatedTarget || e.toElement;
+  if ((!element || element.nodeName === "HTML") && !appState.isPopupOpen) {
+    appState.isPopupOpen = true;
+    // самый дешевый отель либо последний, либо первый -- зависит от направления сортировки
+    const cheapestHotel = appState.sortOrder === 'desc' ? appState.hotels[appState.visibleHotels - 1] : appState.hotels[0];
+    const element = renderSingleHotelItem(cheapestHotel);
+    popupContent.insertAdjacentElement('afterbegin', element);
+    popup.classList.add('popup_opened');
+  }
+};
+/*
+const closePopup = () => {
+  popup.classList.remove('popup_opened');
+};*/
+
+// функция инициализации приложения -- фильтруем отели и потом отображаем их
+const init = () => {
+  validateHotels();
+  renderHotels();
+
+  showMoreHotelsButton.addEventListener('click', handleShowMoreHotelClick);
+  sortByPriceAscButton.addEventListener('click', (e) => handleSortButtonClick(e, 'asc'));
+  sortByPriceDescButton.addEventListener('click', (e) => handleSortButtonClick(e, 'desc'));
+  //closePopupButton.addEventListener('click', closePopup)
+  document.addEventListener('mouseleave', onMouseOutDocument);
+};
+
+init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+//КОНСТАНТЫ: -------------------------------------------------
 
 const hotelsArea = document.querySelector('.hotels');
 const hotelsContainer = hotelsArea.querySelector('.hotels__container');
@@ -48,6 +187,12 @@ const hotelTemplate = hotelsArea.querySelector('#hotel-template').content;
 const showButton = hotelsArea.querySelector('.hotels__show-button');
 const incrementButton = hotelsArea.querySelector('.hotels__filter-button_type_increment');
 const decrementButton = hotelsArea.querySelector('.hotels__filter-button_type_decrement');
+
+//--------------------------------------------------------------------------------------
+
+//ФУНКЦИИ: -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//СОЗДАЕМ ОТЕЛИ: -----------------
 
 function createHotel(titleValue, priceValue, linkValue) {
   let hotelsElement = hotelTemplate.cloneNode(true);
@@ -60,7 +205,6 @@ function createHotel(titleValue, priceValue, linkValue) {
   hotelsElementImage.alt = titleValue;
   hotelsElementTitle.textContent = titleValue;
   hotelsElementPrice.textContent = '€ ' + priceValue;
-  //hotelsElementPrice.textContent = priceValue;
 
   return hotelsElement
 }
@@ -75,7 +219,9 @@ function renderElements(x) {
   }
 }
 
+//-----------------------------------------------------------------------------
 
+//ПОКАЗАТЬ ОТЕЛИ: ------
 
 function showAllHotels() {
   const currentHotelsArray = hotelsContainer.querySelectorAll('.hotel');
@@ -92,34 +238,6 @@ function showFirstsHotels() {
 
 }
 
-/*
-function removeAllHotels() {
-  const elementsForRemove = hotelsArea.querySelectorAll('.hotel');
-  for (let i = 0; i < elementsForRemove.length; i++) {
-    elementsForRemove[i].remove()
-  }
-}
-*/
-
-
-/*
-function showIncrementHotels() {
-  const hotelsIncrement = hotels.sort((a, b) => a.price - b.price);
-  removeAllHotels();
-  renderElements(hotelsIncrement);
-  showFirstsHotels()
-
-}
-
-function showDecrementHotels() {
-  const hotelsDecrement = hotels.sort((a, b) => b.price - a.price);
-  removeAllHotels();
-  renderElements(hotelsDecrement);
-  showFirstsHotels()
-}
-*/
-
-
 
 function showIncrementHotels() {
   const nodeList = document.querySelectorAll('.hotel');
@@ -133,8 +251,6 @@ function showIncrementHotels() {
       const textB = nodeB.querySelector('.hotel__price').textContent;
       const numberA = parseInt(textA.match(/\d+/));
       const numberB = parseInt(textB.match(/\d+/));
-      /*var numberA = parseInt(+textA);
-      var numberB = parseInt(+textB);*/
       return numberA - numberB;
     })
     .forEach(function(node) {
@@ -163,11 +279,6 @@ function showDecrementHotels() {
 }
 
 
-renderElements(hotels);
-showIncrementHotels()
-showFirstsHotels();
-
-
 
 
 const popupBest = document.querySelector('.popup_type_best-hotel');
@@ -194,9 +305,25 @@ function showBestPopup() {
 }
 
 
+
+
+//СЛУШАТЕЛИ: ------------------------
+
 document.addEventListener('mouseleave', showBestPopup);
 
 
 showButton.addEventListener('click', showAllHotels);
 incrementButton.addEventListener('click', showIncrementHotels);
 decrementButton.addEventListener('click', showDecrementHotels);
+
+//------------------------------------------------------------------
+
+
+
+//ВЫПОЛНЯЕТСЯ: ------------------------------
+
+
+renderElements(hotels);
+showIncrementHotels()
+showFirstsHotels();
+*/
