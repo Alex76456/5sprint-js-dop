@@ -1,4 +1,4 @@
-//МАССИВ ВОДНЫХ ДАННЫХ: ------------------------------------------------------------
+//МАССИВ ВВОДНЫХ ДАННЫХ: ------------------------------------------------------------
 
 const hotels = [{
     title: "Albus Hotel Amsterdam City Centre",
@@ -46,17 +46,27 @@ const hotels = [{
 
 
 
+
+//ВАЖНЫЙ ОБЪЕКТ:-----------------------------------------------------------------------------------------
+
 // Объект с текущим состоянием приложения
 // sortOrder -- выбранная сортировка
 // visibleHotels -- количесто отображаемых отелей
 // hotels -- отфильтрованные отели (без отелей без цен)
 // isPopupOpen -- открыт ли сейчас попап
+
 const appState = {
   sortOrder: undefined,
   visibleHotels: 3,
   hotels: [],
   isPopupOpen: false,
 };
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//КОНСТАНТЫ:------------------------------------------------------------------------------------------------
 
 const hotelTemplate = document.querySelector('#hotel-template').content.querySelector('.hotel');
 const hotelsWrapper = document.querySelector('.hotels__container');
@@ -66,9 +76,14 @@ const sortByPriceDescButton = document.querySelector('.hotels__filter-button_typ
 
 
 const popup = document.querySelector('.popup');
-const popupContent = popup.querySelector('.popup__content');
+const popupContent = popup.querySelector('.popup__best');
 
 //const closePopupButton = popup.querySelector('.close-popup');
+
+//------------------------------------------------------------------------------------------
+
+
+
 
 // обработчки кнопки "показать больше"
 // меняет количество appState.visibleHotel на максимальное, скрывает кнопку и заново отрисовывает отели
@@ -76,9 +91,11 @@ const handleShowMoreHotelClick = (e) => {
   e.preventDefault();
 
   appState.visibleHotels = appState.hotels.length;
-  //showMoreHotelsButton.classList.add('button-show-more_hidden');
+  showMoreHotelsButton.classList.add('hotels__show-button_hidden');
   renderHotels();
 };
+
+
 
 // создание элемента отеля
 const renderSingleHotelItem = (hotel) => {
@@ -95,6 +112,8 @@ const renderSingleHotelItem = (hotel) => {
   return element
 };
 
+
+
 // рендер списка отелей -- очищаем hotelsWrapper и подготавлиаем hotelsToRender с нужным количеством отелей
 const renderHotels = () => {
   hotelsWrapper.textContent = '';
@@ -102,10 +121,18 @@ const renderHotels = () => {
   hotelsToRender.forEach(item => hotelsWrapper.append(renderSingleHotelItem(item)));
 };
 
+
+
+
+
+
 // фильтрация отелей без цен -- их показывать нет смысла
 const validateHotels = () => {
   appState.hotels = hotels.filter(item => item.price);
 };
+
+
+
 
 // сортировка по цене. Сортируем массив данных, а не сами элементы.
 const sortHotels = () => {
@@ -122,6 +149,10 @@ const sortHotels = () => {
   renderHotels();
 };
 
+
+
+
+
 // обработчик клика сортировки (order -- агрумент с направлением сортировки)
 const handleSortButtonClick = (e, order) => {
   e.preventDefault();
@@ -130,6 +161,11 @@ const handleSortButtonClick = (e, order) => {
     sortHotels();
   }
 };
+
+
+
+
+
 
 // проверка на выход курсора за пределы document
 const onMouseOutDocument = (e) => {
@@ -148,6 +184,10 @@ const closePopup = () => {
   popup.classList.remove('popup_opened');
 };*/
 
+
+
+
+
 // функция инициализации приложения -- фильтруем отели и потом отображаем их
 const init = () => {
   validateHotels();
@@ -159,6 +199,10 @@ const init = () => {
   //closePopupButton.addEventListener('click', closePopup)
   document.addEventListener('mouseleave', onMouseOutDocument);
 };
+
+
+
+//ВЫПОЛНЯЕТСЯ:--------------------------------------
 
 init();
 
