@@ -1,3 +1,27 @@
+@import url('../vendor/normalize.css');
+@import url('../vendor/font.css');
+@import url('../blocks/root/root.css');
+@import url('../blocks/page/page.css');
+@import url('../blocks/hotels/hotels.css');
+@import url('../blocks/hotels/__filter/hotels__filter.css');
+@import url('../blocks/hotels/__filter-title/hotels__filter-title.css');
+@import url('../blocks/hotels/__filter-button/hotels__filter-button.css');
+@import url('../blocks/hotels/__container/hotels__container.css');
+@import url('../blocks/hotel/hotel.css');
+@import url('../blocks/hotel/_opened/hotel_opened.css');
+@import url('../blocks/hotel/__image/hotel__image.css');
+@import url('../blocks/hotel/__description/hotel__description.css');
+@import url('../blocks/hotel/__title/hotel__title.css');
+@import url('../blocks/hotel/__price/hotel__price.css');
+@import url('../blocks/hotels/__show/hotels__show.css');
+@import url('../blocks/hotels/__show-button/hotels__show-button.css');
+@import url('../blocks/hotels/__show-button/_hidden/hotels__show-button_hidden.css');
+@import url('../blocks/popup/popup.css');
+@import url('../blocks/popup/_opened/popup_opened.css');
+@import url('../blocks/popup/__content/popup__content.css');
+@import url('../blocks/popup/__title/popup__title.css');
+@import url('../blocks/popup/__best/popup__best.css');
+
 /*
 @import url('../blocks');
 @import url('../blocks');
@@ -11,5 +35,4 @@
 /*
 * {
   outline: 1px solid red;
-}
-*/
+}*/

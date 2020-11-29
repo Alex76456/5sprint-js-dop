@@ -1,0 +1,6 @@
+.hotels__container {
+  list-style: none;
+  padding: 0;
+  width: calc(100% - 36px);
+  margin: 0 auto;
+}
